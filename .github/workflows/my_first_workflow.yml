@@ -1,22 +1,28 @@
 name: Shell commands
 
-on: [push]
+on:
+  push:
 
 jobs:
   run-shell-command:
+    name: Run on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         os: [ubuntu-latest, ubuntu-20.04]
+
     steps:
-      - name: Checkout code
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: echo a string
+      - name: Echo a string
         run: echo "Hello world"
 
-      - name: multiline script
+      - name: Run a multiline script
         run: |
+          echo "Running Python version check"
           python3 -V
+          echo "Creating a file"
           touch my_file_with_workflow.py
+          echo "Listing directory contents"
           ls -l
